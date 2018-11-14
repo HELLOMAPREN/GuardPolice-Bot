@@ -1,4 +1,4 @@
-# DJRemixBot
+# GuardPolice Bot
 Bot Discord
 
 
