@@ -27,18 +27,15 @@ bot.on("message", async message => {
   const args = messageArray.slice(1);
   let prefix = "p!."
   
-  let m = message.author.bot
-  if(cmd === `${prefix}ping`) {
-    message.channel.send(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`);
-  }
+
   
-  if(command === "say") {
+  if(cmd === "say") {
     const sayMessage = args.join(" ");
     message.delete().catch(O_o=>{}); 
     message.channel.send(sayMessage);
   }
   
-  if(command === "kick") {
+  if(cmd === `${prefix}kick`) {
     if(!message.member.roles.some(r=>["ADMINISTRATION"].includes(r.name)) )
       return message.reply("Sorry, you don't have permissions to use this!");
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
@@ -54,7 +51,7 @@ bot.on("message", async message => {
 
   }
   
-  if(command === "ban") {
+  if(cmd === `${prefix}ban`) {
 
     if(!message.member.roles.some(r=>["Administrator"].includes(r.name)) )
       return message.reply("Sorry, you don't have permissions to use this!")
@@ -72,7 +69,7 @@ bot.on("message", async message => {
     message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
   }
   
-  if(command === "purge") {
+  if(cmd === `${prefix}purge`) {
     const deleteCount = parseInt(args[0], 10);
     if(!deleteCount || deleteCount < 2 || deleteCount > 100)
       return message.reply("Please provide a number between 2 and 100 for the number of messages to delete");
