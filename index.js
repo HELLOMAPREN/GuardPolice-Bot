@@ -29,7 +29,7 @@ bot.on("message", async message => {
   
 
   
-  if(cmd === "say") {
+  if(cmd === `${prefix}say`) {
     const sayMessage = args.join(" ");
     message.delete().catch(O_o=>{}); 
     message.channel.send(sayMessage);
@@ -53,7 +53,7 @@ bot.on("message", async message => {
   
   if(cmd === `${prefix}ban`) {
 
-    if(!message.member.roles.some(r=>["Administrator"].includes(r.name)) )
+    if(!message.member.roles.some(r=>["BAN_MEMBERS"].includes(r.name)) )
       return message.reply("Sorry, you don't have permissions to use this!")
     let member = message.mentions.members.first();
     if(!member)
