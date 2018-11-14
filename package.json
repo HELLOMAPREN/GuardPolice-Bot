@@ -10,10 +10,16 @@
   "keywords": [],
   "description": "",
   "dependencies": {
-    "discord.js": "^11.4.2",
-    "nodemon": "",
-    "moment-duration-format": "",
+    "discord.js": "",
+    "fs": "",
+    "simple-youtube-api": "",
+    "opus": "",
+    "node-opus": "",
     "moment": "",
-    "fs": ""
+    "moment-duration-format": "",
+    "os": "",
+"cpu-stat": "",
+"ms": "",
+    "ytdl-core": ""
   }
 }
