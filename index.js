@@ -4,7 +4,7 @@ const config = require("./config.json");
 
 bot.on("ready", () => {
   console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`); 
-  bot.user.setActivity(`Serving ${bot.guilds.size} servers`);
+  bot.user.setActivity(`Guarding ${bot.guilds.size} servers`, {type: "WATCHING"})
 });
 
 bot.on("guildCreate", guild => {
@@ -22,63 +22,26 @@ bot.on("message", async message => {
   
 //  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
 //  const command = args.shift().toLowerCase();
-  const messageArray = message.content.split(" ");
-  const cmd = messageArray[0];
-  const args = messageArray.slice(1);
-  let prefix = "p!."
+bot.on("message", async (message) => {
+  if (message.author.bot) return;
+  if (message.channel.type === "dm") return
   
+  let prefix = "g:" // bisa ganti lah ya
+    let msg = message.content.toLowerCase();
+    let sender = message.author;
+    let args = message.content.slice(prefix.length).trim().split(" ");
+    let cmd = args.shift().toLowerCase();
 
-  
-  if(cmd === `${prefix}say`) {
-    const sayMessage = args.join(" ");
-    message.delete().catch(O_o=>{}); 
-    message.channel.send(sayMessage);
-  }
-  
-  if(cmd === `${prefix}kick`) {
-    if (!message.member.hasPermission("KICK_MEMBERS"))
-      return message.reply("Sorry, you don't have permissions to use this!");
-    let member = message.mentions.members.first() || message.guild.members.get(args[0]);
-    if(!member)
-      return message.reply("Please mention a valid member of this server");
-    if(!member.kickable) 
-      return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
-    let reason = args.slice(1).join(' ');
-    if(!reason) reason = "No reason provided";
-    await member.kick(reason)
-      .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
-    message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
+  if (!message.content.startsWith(prefix)) return;
+try {
+    let commandFile = require(`./cmds/${cmd}.js`);
+    commandFile.run(bot, message, args);
+} catch (e) {
+    console.log(e.message)
+} finally {
+    console.log(`${message.author.tag} menggunakan perintah ${cmd}`);
+}
 
-  }
-  
-  if(cmd === `${prefix}ban`) {
-
-    let member = message.mentions.members.first();
-    if(!member)
-      return message.reply("Please mention a valid member of this server");
-    if (!message.member.hasPermission("BAN_MEMBERS"))
-      return message.reply("Sorry, you don't have permissions to use this!")
-    if(!member.bannable) 
-      return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
-
-    let reason = args.slice(1).join(' ');
-    if(!reason) reason = "No reason provided";
-    
-    await member.ban(reason)
-      .catch(error => message.reply(`Sorry ${message.author} I couldn't ban because of : ${error}`));
-    message.reply(`${member.user.tag} has been banned by ${message.author.tag} because: ${reason}`);
-  }
-  
-  if(cmd === `${prefix}purge`) {
-    const deleteCount = parseInt(args[0], 10);
-    if(!deleteCount || deleteCount < 2 || deleteCount > 100)
-      return message.reply("Please provide a number between 2 and 100 for the number of messages to delete");
-    
-
-    const fetched = await message.channel.fetchMessages({limit: deleteCount});
-    message.channel.bulkDelete(fetched)
-      .catch(error => message.reply(`Couldn't delete messages because of: ${error}`));
-  }
 });
 
 bot.login(process.env.token);
