@@ -20,12 +20,15 @@ bot.on("message", async message => {
   if(message.author.bot) return;
   if(message.content.indexOf(config.prefix) !== 0) return;
   
-  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
+//  const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+//  const command = args.shift().toLowerCase();
+  const messageArray = message.content.split(" ");
+  const cmd = messageArray[0];
+  const args = messageArray.slice(1);
   let prefix = "p!."
   
   let m = message.author.bot
-  if(prefix + "ping") {
+  if(cmd === `${prefix}ping`) {
     message.channel.send(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`);
   }
   
