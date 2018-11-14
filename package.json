@@ -11,6 +11,7 @@
   "description": "",
   "dependencies": {
     "discord.js": "^11.4.2",
-    "nodemon": ""
+    "nodemon": "",
+    "fs": ""
   }
 }
