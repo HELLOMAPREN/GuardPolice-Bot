@@ -22,9 +22,10 @@ bot.on("message", async message => {
   
   const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
+  let prefix = "p!."
   
   
-  if(command === "ping") {
+  if(prefix === "ping") {
     message.channel.send(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`);
   }
   
