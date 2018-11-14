@@ -53,12 +53,12 @@ bot.on("message", async message => {
   
   if(cmd === `${prefix}ban`) {
 
-    message.author.hasPermission("BAN_MEMBERS")
-    if(!message.author.kick)
-      return message.reply("Sorry, you don't have permissions to use this!")
     let member = message.mentions.members.first();
     if(!member)
       return message.reply("Please mention a valid member of this server");
+    if (!message.member.hasPermission("BAN_MEMBERS"))
+    if(!message.author.kick)
+      return message.reply("Sorry, you don't have permissions to use this!")
     if(!member.bannable) 
       return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
 
