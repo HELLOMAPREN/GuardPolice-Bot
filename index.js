@@ -36,7 +36,7 @@ bot.on("message", async message => {
   }
   
   if(cmd === `${prefix}kick`) {
-    if(!message.member.roles.some(r=>["ADMINISTRATION"].includes(r.name)) )
+    if (!message.member.hasPermission("KICK_MEMBERS"))
       return message.reply("Sorry, you don't have permissions to use this!");
     let member = message.mentions.members.first() || message.guild.members.get(args[0]);
     if(!member)
@@ -57,7 +57,6 @@ bot.on("message", async message => {
     if(!member)
       return message.reply("Please mention a valid member of this server");
     if (!message.member.hasPermission("BAN_MEMBERS"))
-    if(!message.author.kick)
       return message.reply("Sorry, you don't have permissions to use this!")
     if(!member.bannable) 
       return message.reply("I cannot ban this user! Do they have a higher role? Do I have ban permissions?");
