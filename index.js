@@ -53,7 +53,8 @@ bot.on("message", async message => {
   
   if(cmd === `${prefix}ban`) {
 
-    if(!message.member.roles.some(r=>["BAN_MEMBERS"].includes(r.name)) )
+    let kick = perms.has("BAN_MEMBERS");
+    if(!message.author.kick)
       return message.reply("Sorry, you don't have permissions to use this!")
     let member = message.mentions.members.first();
     if(!member)
