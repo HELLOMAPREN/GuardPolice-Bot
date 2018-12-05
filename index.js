@@ -1,26 +1,17 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
-const config = require("./config.json");
+
 
 bot.on("ready", () => {
   console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`); 
-  bot.user.setActivity(`Guarding ${bot.guilds.size} servers`, {type: "WATCHING"})
+  bot.user.setActivity(`16278 Shards`, {type: "WATCHING"})
 });
-
-bot.on("guildCreate", guild => {
-  console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
-});
-
-bot.on("guildDelete", guild => {
-  console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
-});
-
 
 bot.on("message", async (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return
   
-  let prefix = "p!." // bisa ganti lah ya
+  let prefix = "]" // bisa ganti lah ya
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let args = message.content.slice(prefix.length).trim().split(" ");
