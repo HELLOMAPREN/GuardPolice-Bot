@@ -20,7 +20,7 @@ bot.on("message", async (message) => {
   if (message.author.bot) return;
   if (message.channel.type === "dm") return
   
-  let prefix = "p!." // bisa ganti lah ya
+  let prefix = "]" // bisa ganti lah ya
     let msg = message.content.toLowerCase();
     let sender = message.author;
     let args = message.content.slice(prefix.length).trim().split(" ");
